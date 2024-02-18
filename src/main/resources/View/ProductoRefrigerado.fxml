@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="472.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductoRefrigeradoController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="472.0" prefWidth="229.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                <TextField fx:id="txtNombre">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </VBox.margin></TextField>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Código" />
+                <TextField fx:id="txtCodigo">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </VBox.margin></TextField>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción" />
+                <TextField fx:id="txtDescripcion">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </VBox.margin></TextField>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valor unitario" />
+                <TextField fx:id="txtValorUnitario">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </VBox.margin></TextField>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad Existente" />
+                <TextField fx:id="txtCantidadExistente">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </VBox.margin></TextField>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Código Temperatura" />
+                <TextField fx:id="txtCodigoTemperatura">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </VBox.margin></TextField>
+            </children>
+        </VBox>
+        <VBox alignment="CENTER" prefHeight="472.0" prefWidth="636.0">
+            <children>
+                <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                        <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
+                        <TableColumn fx:id="colCodigo" prefWidth="75.0" text="Código" />
+                        <TableColumn fx:id="colDescripcion" prefWidth="90.26861572265625" text="Descripción" />
+                        <TableColumn fx:id="colValorUnitario" prefWidth="98.86566162109375" text="Valor Unitario" />
+                        <TableColumn fx:id="colCantidadExistente" prefWidth="119.6417236328125" text="Cantidad Existente" />
+                        <TableColumn fx:id="colCodigoTemperatura" minWidth="0.0" prefWidth="131.10443115234375" text="Código Temperatura" />
+                    </columns>
+                </TableView>
+                <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarProducto" prefHeight="27.0" prefWidth="130.0" text="Agregar">
+                    <VBox.margin>
+                        <Insets top="50.0" />
+                    </VBox.margin>
+                </Button>
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="26.0" prefWidth="128.0" text="Eliminar">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#modificar" prefHeight="26.0" prefWidth="128.0" text="Modificar">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#regresar" prefHeight="26.0" prefWidth="133.0" text="Regresar">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            </children>
+        </VBox>
+    </children>
+</HBox>
