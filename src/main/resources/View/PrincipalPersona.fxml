@@ -10,10 +10,10 @@
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selecciona el tipo de persona">
          <font>
-            <Font name="Baskerville Old Face" size="33.0" />
+            <Font name="Baskerville Old Face" size="48.0" />
          </font>
       </Text>
-      <Button fx:id="btnPersonaNatural" mnemonicParsing="false" onAction="#PersonaNatural" text="Persona Natural">
+      <Button fx:id="btnPersonaNatural" mnemonicParsing="false" onAction="#PersonaNatural" prefHeight="42.0" prefWidth="336.0" styleClass="button4" stylesheets="@../../../Estilo/style.css" text="Persona Natural">
          <VBox.margin>
             <Insets bottom="15.0" top="15.0" />
          </VBox.margin>
@@ -21,7 +21,7 @@
             <Font size="21.0" />
          </font>
       </Button>
-      <Button fx:id="btnPersonaJuridica" mnemonicParsing="false" onAction="#PersonaJuridica" text="Persona Jurídica">
+      <Button fx:id="btnPersonaJuridica" mnemonicParsing="false" onAction="#PersonaJuridica" prefHeight="42.0" prefWidth="330.0" styleClass="button4" stylesheets="@../../../Estilo/style.css" text="Persona Jurídica">
          <VBox.margin>
             <Insets bottom="15.0" top="15.0" />
          </VBox.margin>
