@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -91,6 +92,8 @@ public class PersonaNaturalController implements Initializable {
 
     @FXML
     private void agregarPersona(ActionEvent event){
+
+        try {
         String nombre= txtNombre.getText();
         String apellido= txtApellido.getText();
         String telefono= txtTelefono.getText();
@@ -113,8 +116,12 @@ public class PersonaNaturalController implements Initializable {
 
         this.personaNaturals.add(p);
         this.tabla.setItems(personaNaturals);
-        System.out.println("Estoy aqui");
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error al convertir texto a número. Asegúrate de ingresar valores válidos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al agregar persona. Asegúrate de ingresar valores válidos.");
+        }
     }
 @FXML
 private void regresar(ActionEvent event){
@@ -134,44 +141,51 @@ private void regresar(ActionEvent event){
 
     @FXML
     private void eliminar(){
-        PersonaNatural p= this.tabla.getSelectionModel().getSelectedItem();
-
-
-        this.personaNaturals.remove(p);
-        this.tabla.refresh();
-
-
-    }
-    @FXML
-    private void modificar(){
-
-        PersonaNatural p= this.tabla.getSelectionModel().getSelectedItem();
-
-        String nombre= txtNombre.getText();
-        String apellido= txtApellido.getText();
-        String telefono= txtTelefono.getText();
-        String direccion= txtDireccion.getText();
-        String fechaNacimiento= txtFechaNacimiento.getText();
-        String email=txtEmail.getText();
-        String id= txtIdentificación.getText();
-
-        PersonaNatural aux= new PersonaNatural(nombre,apellido,id,direccion,telefono,email,fechaNacimiento);
-
-
-            p.setNombre(aux.getNombre());
-            p.setApellidos(aux.getApellidos());
-            p.setTelefono(aux.getTelefono());
-            p.setDireccion(aux.getDireccion());
-            p.setFechaNacimiento(aux.getFechaNacimiento());
-            p.setEmail(aux.getEmail());
-            p.setIdentificacion(aux.getIdentificacion());
-
-            this.tabla.refresh();
-
-
+        try {
+            PersonaNatural p = this.tabla.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                this.personaNaturals.remove(p);
+                this.tabla.refresh();
+            } else {
+                JOptionPane.showMessageDialog (null,"Selecciona un elemento antes de intentar eliminar.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar eliminar la persona.");
         }
-
-
-
     }
 
+
+    @FXML
+    private void modificar() {
+        try {
+            PersonaNatural p = this.tabla.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                String nombre = txtNombre.getText();
+                String apellido = txtApellido.getText();
+                String telefono = txtTelefono.getText();
+                String direccion = txtDireccion.getText();
+                String fechaNacimiento = txtFechaNacimiento.getText();
+                String email = txtEmail.getText();
+                String id = txtIdentificación.getText();
+
+                PersonaNatural aux = new PersonaNatural(nombre, apellido, id, direccion, telefono, email, fechaNacimiento);
+
+                p.setNombre(aux.getNombre());
+                p.setApellidos(aux.getApellidos());
+                p.setTelefono(aux.getTelefono());
+                p.setDireccion(aux.getDireccion());
+                p.setFechaNacimiento(aux.getFechaNacimiento());
+                p.setEmail(aux.getEmail());
+                p.setIdentificacion(aux.getIdentificacion());
+
+                this.tabla.refresh();
+            } else {
+                JOptionPane.showMessageDialog (null,"Selecciona un elemento antes de intentar modificar.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error al convertir texto a número. Asegúrate de ingresar valores válidos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar modificar la persona.");
+        }
+    }
+}

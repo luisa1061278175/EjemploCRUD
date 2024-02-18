@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -106,6 +107,7 @@ public class ProductoEnvasadoController implements Initializable {
     @FXML
     private void agregarProducto(ActionEvent event){
 
+        try {
         String nombre= txtNombre.getText();
         int codigo= Integer.parseInt(txtCodigo.getText());
         int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
@@ -128,8 +130,9 @@ public class ProductoEnvasadoController implements Initializable {
 
         this.productosEnvasado.add(p);
         this.tabla.setItems(productosEnvasado);
-
-
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error ");
+        }
     }
 
     @FXML
@@ -151,20 +154,23 @@ public class ProductoEnvasadoController implements Initializable {
     @FXML
     private void eliminar() {
 
+        try {
         ProductosEnvasados p = this.tabla.getSelectionModel().getSelectedItem();
 
 
         this.productosEnvasado.remove(p);
         this.tabla.refresh();
 
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar eliminar el producto.");
+        }
     }
 
     @FXML
     private void modificar() {
 
         ProductosEnvasados p = this.tabla.getSelectionModel().getSelectedItem();
-
+        try {
         String nombre = txtNombre.getText();
         int codigo = Integer.parseInt(txtCodigo.getText());
         int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
@@ -185,13 +191,13 @@ public class ProductoEnvasadoController implements Initializable {
         p.setDescripcion(aux.getDescripcion());
 
         this.tabla.refresh();
-
-
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error al convertir texto a número. Asegúrate de ingresar valores válidos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar modificar el producto.");
+        }
     }
-
-
 }
-
 
 
 

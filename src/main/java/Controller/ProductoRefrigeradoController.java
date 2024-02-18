@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -71,13 +72,13 @@ public class ProductoRefrigeradoController implements Initializable {
     private TextField txtValorUnitario;
 
 
-
     private ObservableList<ProductosRefrigerados> productosRefrigerados;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         productosRefrigerados = FXCollections.observableArrayList();
+
 
         this.colCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
         this.colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -91,36 +92,41 @@ public class ProductoRefrigeradoController implements Initializable {
     }
 
 
-
     @FXML
-    private void agregarProducto(ActionEvent event){
-
-        String nombre= txtNombre.getText();
-        int codigo= Integer.parseInt(txtCodigo.getText());
-        int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
-        int valorU= Integer.parseInt(txtValorUnitario.getText());
-        String codigoTemperatura= txtCodigoTemperatura.getText();
-        String descripcion=txtDescripcion.getText();
+    private void agregarProducto(ActionEvent event) {
 
 
-        txtCodigo.setText("");
-        txtDescripcion.setText("");
-        txtNombre.setText("");
-        txtCodigoTemperatura.setText("");
-        txtValorUnitario.setText("");
-        txtCantidadExistente.setText("");
+        try {
 
-        ProductosRefrigerados p= new ProductosRefrigerados(codigo,nombre,descripcion,valorU,cantidadExistente,codigoTemperatura);
+            String nombre = txtNombre.getText();
+            int codigo = Integer.parseInt(txtCodigo.getText());
+            int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
+            int valorU = Integer.parseInt(txtValorUnitario.getText());
+            String codigoTemperatura = txtCodigoTemperatura.getText();
+            String descripcion = txtDescripcion.getText();
 
-        this.productosRefrigerados.add(p);
-        this.tabla.setItems(productosRefrigerados);
-        System.out.println("Estoy aqui");
 
+            txtCodigo.setText("");
+            txtDescripcion.setText("");
+            txtNombre.setText("");
+            txtCodigoTemperatura.setText("");
+            txtValorUnitario.setText("");
+            txtCantidadExistente.setText("");
+
+            ProductosRefrigerados p = new ProductosRefrigerados(codigo, nombre, descripcion, valorU, cantidadExistente, codigoTemperatura);
+
+            this.productosRefrigerados.add(p);
+            this.tabla.setItems(productosRefrigerados);
+
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error al convertir texto a número. Asegúrate de ingresar valores válidos.");
+        }
     }
 
 
     @FXML
-    private void regresar(ActionEvent event){
+    private void regresar(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         // Cierra la ventana
@@ -129,52 +135,68 @@ public class ProductoRefrigeradoController implements Initializable {
 
 
     @FXML
-    private void seleccionar(MouseEvent event){
-
-        ProductosRefrigerados p= this.tabla.getSelectionModel().getSelectedItem();
-
-    }
-    @FXML
-    private void eliminar() {
+    private void seleccionar(MouseEvent event) {
 
         ProductosRefrigerados p = this.tabla.getSelectionModel().getSelectedItem();
 
-
-        this.productosRefrigerados.remove(p);
-        this.tabla.refresh();
-
-
     }
+
+    @FXML
+
+    private void eliminar() {
+        try {
+            ProductosRefrigerados p = this.tabla.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                this.productosRefrigerados.remove(p);
+                this.tabla.refresh();
+            } else {
+                JOptionPane.showMessageDialog (null,"Selecciona un elemento antes de intentar eliminar.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar eliminar el producto.");
+        }
+    }
+
 
     @FXML
     private void modificar() {
 
-        ProductosRefrigerados p = this.tabla.getSelectionModel().getSelectedItem();
+        try {
 
-        String nombre= txtNombre.getText();
-        int codigo= Integer.parseInt(txtCodigo.getText());
-        int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
-        int valorU= Integer.parseInt(txtValorUnitario.getText());
-        String codigoTemperatura= txtCodigoTemperatura.getText();
-        String descripcion=txtDescripcion.getText();
+            ProductosRefrigerados p = this.tabla.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                String nombre = txtNombre.getText();
+                int codigo = Integer.parseInt(txtCodigo.getText());
+                int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
+                int valorU = Integer.parseInt(txtValorUnitario.getText());
+                String codigoTemperatura = txtCodigoTemperatura.getText();
+                String descripcion = txtDescripcion.getText();
 
-        ProductosRefrigerados aux = new ProductosRefrigerados(codigo,nombre,descripcion,valorU,cantidadExistente,codigoTemperatura);
+                ProductosRefrigerados aux = new ProductosRefrigerados(codigo, nombre, descripcion, valorU, cantidadExistente, codigoTemperatura);
 
+                p.setNombre(aux.getNombre());
+                p.setCodigo(aux.getCodigo());
+                p.setCantidadExistente(aux.getCantidadExistente());
+                p.setValorUnitario(aux.getValorUnitario());
+                p.setCodigoTemperatura(aux.getCodigoTemperatura());
+                p.setDescripcion(aux.getDescripcion());
 
-        p.setNombre(aux.getNombre());
-        p.setCodigo(aux.getCodigo());
-        p.setCantidadExistente(aux.getCantidadExistente());
-        p.setValorUnitario(aux.getValorUnitario());
-        p.setCodigoTemperatura(aux.getCodigoTemperatura());
-        p.setDescripcion(aux.getDescripcion());
-
-        this.tabla.refresh();
+                this.tabla.refresh();
+            } else {
+                JOptionPane.showMessageDialog (null,"Selecciona un elemento antes de intentar modificar.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error al convertir texto a número. Asegúrate de ingresar valores válidos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar modificar el producto.");
+        }
+    }
 
 
     }
 
 
-}
+
 
 
 

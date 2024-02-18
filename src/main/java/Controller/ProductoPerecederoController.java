@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -96,6 +97,9 @@ public class ProductoPerecederoController implements Initializable {
     @FXML
     private void agregarProducto(ActionEvent event){
 
+        try {
+
+
         String nombre= txtNombre.getText();
         int codigo= Integer.parseInt(txtCodigo.getText());
         int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
@@ -116,8 +120,11 @@ public class ProductoPerecederoController implements Initializable {
 
         this.productoPerecedero.add(p);
         this.tabla.setItems(productoPerecedero);
-        System.out.println("Estoy aqui");
 
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error ");
+        }
     }
 
     @FXML
@@ -138,50 +145,51 @@ public class ProductoPerecederoController implements Initializable {
     @FXML
     private void eliminar() {
 
-        ProductoPerecedero p = this.tabla.getSelectionModel().getSelectedItem();
-
-
-        this.productoPerecedero.remove(p);
-        this.tabla.refresh();
-
-
+        try {
+            ProductoPerecedero p = this.tabla.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                this.productoPerecedero.remove(p);
+                this.tabla.refresh();
+            } else {
+                JOptionPane.showMessageDialog (null,"Selecciona un elemento antes de intentar eliminar.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar eliminar el producto.");
+        }
     }
 
     @FXML
     private void modificar() {
+        try {
+            ProductoPerecedero p = this.tabla.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                String nombre = txtNombre.getText();
+                int codigo = Integer.parseInt(txtCodigo.getText());
+                int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
+                int valorU = Integer.parseInt(txtValorUnitario.getText());
+                String fechaVencimiento = txtFechaVencimiento.getText();
+                String descripcion = txtDescripcion.getText();
 
-        ProductoPerecedero p = this.tabla.getSelectionModel().getSelectedItem();
+                ProductoPerecedero aux = new ProductoPerecedero(codigo, nombre, descripcion, valorU, cantidadExistente, fechaVencimiento);
 
-        String nombre= txtNombre.getText();
-        int codigo= Integer.parseInt(txtCodigo.getText());
-        int cantidadExistente = Integer.parseInt(txtCantidadExistente.getText());
-        int valorU= Integer.parseInt(txtValorUnitario.getText());
-        String fechaVencimiento= txtFechaVencimiento.getText();
-        String descripcion=txtDescripcion.getText();
+                p.setNombre(aux.getNombre());
+                p.setCodigo(aux.getCodigo());
+                p.setCantidadExistente(aux.getCantidadExistente());
+                p.setValorUnitario(aux.getValorUnitario());
+                p.setFechaVencimiento(aux.getFechaVencimiento());
+                p.setDescripcion(aux.getDescripcion());
 
-        ProductoPerecedero aux = new ProductoPerecedero(codigo,nombre,descripcion,valorU,cantidadExistente,fechaVencimiento);
-
-
-        p.setNombre(aux.getNombre());
-        p.setCodigo(aux.getCodigo());
-        p.setCantidadExistente(aux.getCantidadExistente());
-        p.setValorUnitario(aux.getValorUnitario());
-        p.setFechaVencimiento(aux.getFechaVencimiento());
-        p.setDescripcion(aux.getDescripcion());
-
-        this.tabla.refresh();
-
-
+                this.tabla.refresh();
+            } else {
+                JOptionPane.showMessageDialog (null,"Selecciona un elemento antes de intentar modificar.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog (null,"Error al convertir texto a número. Asegúrate de ingresar valores válidos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog (null,"Error al intentar modificar el producto.");
+        }
     }
-
-
 }
-
-
-
-
-
-
 
 
 
