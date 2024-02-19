@@ -8,4 +8,6 @@ module com.example.ejemplocrud {
     exports Controller;
     exports Model;
     opens Model to javafx.fxml;
+    exports App;
+    opens App to javafx.fxml;
 }
